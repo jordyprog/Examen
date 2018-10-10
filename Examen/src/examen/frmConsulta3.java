@@ -4,20 +4,69 @@
  * and open the template in the editor.
  */
 package examen;
-
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.*;
 /**
  *
  * @author user
  */
 public class frmConsulta3 extends javax.swing.JFrame {
-
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel dtm=new DefaultTableModel();
+//    String column;
     /**
      * Creates new form frmConsulta3
      */
     public frmConsulta3() {
         initComponents();
+//        this.setLocationRelativeTo(null);
+//        this.setSize(675,475);
+        String titulos []={"id_pedido","id_tienda","fecha_prog","fecha_ent"};
+        dtm.setColumnIdentifiers(titulos);
+        tblpedido.setModel(dtm);
+        conectarJDBC();
     }
-
+    
+    public void conectarJDBC(){
+        String url="jdbc:sqlserver://localhost;databaseName=FLORERIA;user="
+        + "sa;password=123456;";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con=DriverManager.getConnection(url);
+            JOptionPane.showMessageDialog(rootPane, "Bienvenido", "Conectar",
+            JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane, "No se pudo conectar a la "
+            + "base de datos", "Conectar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+        
+        private void mostrar(){
+            
+        String sql="select id_pedido,id_tienda,fecha_prog,fecha_ent FROM Pedido_F";
+        try {
+            
+            stmt=con.createStatement();
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                String []datos=new String[4];
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                dtm.addRow(datos);
+            }
+//            con.close();
+//            stmt.close();
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +76,87 @@ public class frmConsulta3 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblpedido = new javax.swing.JTable();
+        btnMOSTRAR = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setText("PEDIDOS");
+
+        tblpedido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblpedido);
+
+        btnMOSTRAR.setText("MOSTRAR");
+        btnMOSTRAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMOSTRARActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(btnMOSTRAR))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(162, 162, 162)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnMOSTRAR)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMOSTRARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMOSTRARActionPerformed
+        // TODO add your handling code here:
+        mostrar();
+    }//GEN-LAST:event_btnMOSTRARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,6 +184,9 @@ public class frmConsulta3 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmConsulta3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -79,5 +197,10 @@ public class frmConsulta3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMOSTRAR;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblpedido;
     // End of variables declaration//GEN-END:variables
 }
