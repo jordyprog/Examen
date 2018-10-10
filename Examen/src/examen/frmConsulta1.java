@@ -5,18 +5,76 @@
  */
 package examen;
 
-/**
- *
- * @author user
- */
-public class frmConsulta1 extends javax.swing.JFrame {
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.*;
 
-    /**
-     * Creates new form frmConsulta1
-     */
+public class frmConsulta1 extends javax.swing.JFrame {
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel dtm=new DefaultTableModel();
+    String column;
+    
     public frmConsulta1() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setSize(675,475);
+        String titulos []={"id_cliente","nombre","apellido","tipo_doc","número_doc","dirección","referencia"};
+        dtm.setColumnIdentifiers(titulos);
+        tblConsulta.setModel(dtm);
+        conectarJDBC();
     }
+    
+    public void conectarJDBC() {
+        
+        String url="jdbc:sqlserver://localhost;databaseName=Floreria;user=sa; password=123456;";
+    try
+    {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        con=DriverManager.getConnection(url);
+        JOptionPane.showMessageDialog(rootPane, "Yeeeeee", "Conectar", JOptionPane.INFORMATION_MESSAGE);
+    }
+    catch(Exception ex)
+    {
+                JOptionPane.showMessageDialog(rootPane, "Noooooooo", "Conectar", JOptionPane.ERROR_MESSAGE);
+
+    }
+    }
+    
+    private void mostrar(){
+        String valor=txtValor.getText();
+        
+        if(rbNomb.isSelected())
+            column="nombre_cli";
+        if(rbApe.isSelected())
+            column="apellido_pat_cli";
+   
+        String sql="select id_cliente,nombre_cli,apellido_pat_cli,* from Cliente_F where "+column+" LIKE '"+valor+"%'";
+        try {
+            
+            stmt=con.createStatement();
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                String []datos=new String[7];
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=rs.getString(7);
+                dtm.addRow(datos);
+            }
+//            con.close();
+//            stmt.close();
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }
+
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +85,56 @@ public class frmConsulta1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        txtValor = new javax.swing.JTextField();
+        rbNomb = new javax.swing.JRadioButton();
+        rbApe = new javax.swing.JRadioButton();
+        btnBuscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblConsulta = new javax.swing.JTable();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 260, -1));
+
+        buttonGroup1.add(rbNomb);
+        rbNomb.setText("Nombre");
+        getContentPane().add(rbNomb, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
+        buttonGroup1.add(rbApe);
+        rbApe.setText("Apellido");
+        getContentPane().add(rbApe, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, -1, -1));
+
+        tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblConsulta);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, 190));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        mostrar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +172,12 @@ public class frmConsulta1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rbApe;
+    private javax.swing.JRadioButton rbNomb;
+    private javax.swing.JTable tblConsulta;
+    private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }
