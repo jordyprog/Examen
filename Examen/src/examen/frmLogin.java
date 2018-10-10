@@ -22,7 +22,7 @@ public class frmLogin extends javax.swing.JFrame {
     
     public void conectarJDBC() {
         
-        String url="jdbc:sqlserver://localhost; databaseName=ventasNoche;user=sa; password=123456;";
+        String url="jdbc:sqlserver://localhost;databaseName=Floreria;user=sa; password=123456;";
     try
     {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -47,7 +47,6 @@ public class frmLogin extends javax.swing.JFrame {
         txtClave = new javax.swing.JPasswordField();
         btnaceptar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -78,9 +77,6 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 80, 30));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/candadochico.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 100, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -176,7 +172,6 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnsalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
