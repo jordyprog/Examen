@@ -89,7 +89,7 @@ public class frmLogin extends javax.swing.JFrame {
         contra= new String(txtClave.getPassword());
         
         try {
-            String sql="Select usuario, contraseña from Login where usuario='"+user+"' and contraseña='"+contra+"'";
+            String sql="Select Usuario,Clave from Login where usuario='"+user+"' and Clave='"+contra+"'";
              stm=con.createStatement();
              rs=stm.executeQuery(sql);
              rs.next();
