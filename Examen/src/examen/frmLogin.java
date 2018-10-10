@@ -17,6 +17,7 @@ public class frmLogin extends javax.swing.JFrame {
     public frmLogin() {
         initComponents();
         conectarJDBC();
+        this.setLocationRelativeTo(null);
           
     }
     
@@ -47,6 +48,7 @@ public class frmLogin extends javax.swing.JFrame {
         txtClave = new javax.swing.JPasswordField();
         btnaceptar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -77,6 +79,7 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 80, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 220));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,6 +175,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnsalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
