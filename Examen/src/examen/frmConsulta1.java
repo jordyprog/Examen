@@ -50,7 +50,7 @@ public class frmConsulta1 extends javax.swing.JFrame {
         if(rbApe.isSelected())
             column="apellido_pat_cli";
    
-        String sql="select id_cliente,nombre_cli,apellido_pat_cli,* from Cliente_F where "+column+" LIKE '"+valor+"%'";
+        String sql="select id_cliente,nombre_cli,apellido_pat_cli,tipo_doc_cli,nro_doc_cli,direccion,referencias from Cliente_F where "+column+" LIKE '"+valor+"%'";
         try {
             
             stmt=con.createStatement();
