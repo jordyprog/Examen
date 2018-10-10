@@ -52,7 +52,7 @@ public class frmConsulta1 extends javax.swing.JFrame {
    
         String sql="select id_cliente,nombre_cli,apellido_pat_cli,tipo_doc_cli,nro_doc_cli,direccion,referencias from Cliente_F where "+column+" LIKE '"+valor+"%'";
         try {
-            
+            limpiar();
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
             while(rs.next()){
@@ -72,6 +72,13 @@ public class frmConsulta1 extends javax.swing.JFrame {
         catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
+    }
+    private void limpiar(){
+        int filas;
+        filas=dtm.getRowCount()-1;
+        for(int i=filas;i>=0;i--){
+            dtm.removeRow(i);
+                    }    
     }
 
      

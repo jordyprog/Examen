@@ -5,17 +5,64 @@
  */
 package examen;
 
-/**
- *
- * @author user
- */
-public class frmConsulta2 extends javax.swing.JFrame {
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.*;
 
-    /**
-     * Creates new form frmConsulta2
-     */
+
+public class frmConsulta2 extends javax.swing.JFrame {
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel dtm=new DefaultTableModel();
+    
     public frmConsulta2() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setSize(675,475);
+        String titulos []={"id_tienda","nro_ruc","dirección"};
+        dtm.setColumnIdentifiers(titulos);
+        tblConsulta.setModel(dtm);
+        conectarJDBC();
+    }
+    
+    public void conectarJDBC() {
+        
+        String url="jdbc:sqlserver://localhost;databaseName=Floreria;user=sa; password=123456;";
+    try
+    {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        con=DriverManager.getConnection(url);
+        JOptionPane.showMessageDialog(rootPane, "Yeeeeee", "Conectar", JOptionPane.INFORMATION_MESSAGE);
+    }
+    catch(Exception ex)
+    {
+                JOptionPane.showMessageDialog(rootPane, "Noooooooo", "Conectar", JOptionPane.ERROR_MESSAGE);
+
+    }
+    }
+    
+    private void mostrar(){
+
+        String sql="select * from Tienda_F";
+        try {
+            
+            stmt=con.createStatement();
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                String []datos=new String[7];
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+
+                dtm.addRow(datos);
+            }
+//            con.close();
+//            stmt.close();
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
     }
 
     /**
@@ -27,21 +74,47 @@ public class frmConsulta2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblConsulta = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("LISTA DE TIENDAS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
+
+        tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblConsulta);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, 190));
+
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        mostrar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +152,9 @@ public class frmConsulta2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblConsulta;
     // End of variables declaration//GEN-END:variables
 }
