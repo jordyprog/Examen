@@ -73,7 +73,6 @@ public class frmConsulta4 extends javax.swing.JFrame {
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
-
                 dtm.addRow(datos);
             }
 //            con.close();
