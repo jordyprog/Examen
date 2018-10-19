@@ -14,7 +14,7 @@ public class frmConsulta1 extends javax.swing.JFrame {
     Statement stmt;
     ResultSet rs;
     DefaultTableModel dtm=new DefaultTableModel();
-    String column;
+    
     
     public frmConsulta1() {
         initComponents();
@@ -42,14 +42,9 @@ public class frmConsulta1 extends javax.swing.JFrame {
     }
     }
     
-    private void mostrar(){
+    private void mostrar(String column){
         String valor=txtValor.getText();
-        
-        if(rbNomb.isSelected())
-            column="nombre_cli";
-        if(rbApe.isSelected())
-            column="apellido_pat_cli";
-   
+         
         String sql="select id_cliente,nombre_cli,apellido_pat_cli,tipo_doc_cli,nro_doc_cli,direccion,referencias from Cliente_F where "+column+" LIKE '"+valor+"%'";
         try {
             limpiar();
@@ -140,7 +135,11 @@ public class frmConsulta1 extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        mostrar();
+        if(rbNomb.isSelected())
+            mostrar("nombre_cli");
+        if(rbApe.isSelected())
+            mostrar("apellido_pat_cli");
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
